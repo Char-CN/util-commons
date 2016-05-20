@@ -22,8 +22,6 @@ public class PathUtil {
 		_resource = _root + "resource/";
 		root = _root;
 		resource = _resource;
-		System.out.println("init:"+root);
-		System.out.println("init:"+resource);
 	}
 
 }
