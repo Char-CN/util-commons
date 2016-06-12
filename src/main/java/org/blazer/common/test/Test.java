@@ -4,18 +4,17 @@ import java.io.IOException;
 
 import org.blazer.common.conf.Conf;
 import org.blazer.common.conf.ConfUtil;
-import org.blazer.common.util.PathConstant;
-import org.blazer.common.util.SysConfig;
 
 /**
  * @author Blazer He
  * @__date 2016年4月27日
  */
-public class Test extends SysConfig {
+public class Test {
 
 	public static void main(String[] args) throws IOException {
-		Conf conf = ConfUtil.getConf(PathConstant.sysConfig);
+		Conf conf = ConfUtil.getConf("/test.conf");
 		System.out.println(conf.invalidList());
+		System.out.println(conf.keyList());
 	}
 
 }

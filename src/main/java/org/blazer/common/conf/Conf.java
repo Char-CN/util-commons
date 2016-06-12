@@ -1,11 +1,13 @@
 package org.blazer.common.conf;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import org.blazer.common.file.FClassReader;
 import org.blazer.common.file.FHandler;
 import org.blazer.common.file.FReader;
 
@@ -50,7 +52,7 @@ public class Conf {
 		return this;
 	}
 
-	private void load(String filePath, String... args) {
+	private void load(String filePath, final String... args) {
 		if (contentMap == null) {
 			contentMap = new HashMap<String, String>();
 		}
@@ -61,7 +63,7 @@ public class Conf {
 			invalidList = new ArrayList<String>();
 		}
 		try {
-			new FReader(filePath, new FHandler() {
+			FHandler fHandler = new FHandler() {
 				@Override
 				public void handle(String row) throws IOException {
 					// 过滤空行
@@ -95,7 +97,19 @@ public class Conf {
 					}
 					contentMap.put(key, value);
 				}
-			});
+			};
+			try {
+				FClassReader fcr = new FClassReader(filePath);
+				fcr.each(fHandler);
+			} catch (Exception e) {
+				if (e instanceof FileNotFoundException) {
+					FReader fr = new FReader(filePath);
+					fr.each(fHandler);
+				} else {
+					e.printStackTrace();
+				}
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

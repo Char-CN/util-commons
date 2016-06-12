@@ -8,9 +8,8 @@ import java.io.IOException;
 
 public class FReader {
 
-	BufferedReader br;
-	FileReader fr;
-
+	BufferedReader br = null;
+	FileReader fr = null;
 	String c = null;
 
 	public FReader(String path) throws FileNotFoundException {
