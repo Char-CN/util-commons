@@ -42,7 +42,9 @@
 	<!-- 2. 编译 -->
 	<target name="compile" depends="init">
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="on" encoding="utf-8">
+			<!--
 			<classpath refid="lib-classpath" />
+			-->
 			<compilerarg line="-g:lines,vars,source" />
 		</javac>
 	</target>
@@ -52,7 +54,6 @@
 		<copy todir="${output.dir}/${resource.dir}">
 			<fileset dir="${resource.dir}" />
 		</copy>
-
 		<!--Create a property containing all .jar files, prefix lib/, and seperated with a space-->
 		<pathconvert property="mf.classpath" pathsep=" ">
 			<mapper>
