@@ -27,6 +27,10 @@ public class RunManager {
 			System.out.println("==RunManager== " + "Usage: java -jar pkg.mainclass [parameters...]");
 			System.exit(-1);
 		}
+		if (RunManager.class.getName().equals(args[0])) {
+			System.out.println("==RunManager== " + "Usage: pkg.mainclass can not be " + RunManager.class.getName());
+			System.exit(-1);
+		}
 		String pkgMainClass = convertPkgMainClassMapping(args[0]);
 		try {
 			Method mainMethod = Class.forName(pkgMainClass).getMethod("main", String[].class);
