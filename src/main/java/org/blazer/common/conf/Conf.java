@@ -109,7 +109,6 @@ public class Conf {
 					e.printStackTrace();
 				}
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

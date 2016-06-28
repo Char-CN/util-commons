@@ -40,14 +40,20 @@ public class RunManager {
 			mainMethod.invoke(null, (Object) removeIndex(args, 0));
 		} catch (Exception e) {
 			System.out.println("==RunManager== " + e.getMessage() + e);
+			e.printStackTrace();
 		}
 	}
 
 	private static String convertPkgMainClassMapping(String pkgMainClass) {
-		Conf conf = ConfUtil.getConf(PathUtil.resource + "sys-pkg-register.properties");
-		if (conf.containsKey(pkgMainClass)) {
-			System.out.println("==RunManager== " + "found pkg register : " + pkgMainClass + " to " + conf.get(pkgMainClass));
-			pkgMainClass = conf.get(pkgMainClass);
+		try {
+			Conf conf = ConfUtil.getConf(PathUtil.resource + "sys-pkg-register.properties");
+			if (conf.containsKey(pkgMainClass)) {
+				System.out.println("==RunManager== " + "found pkg register : " + pkgMainClass + " to " + conf.get(pkgMainClass));
+				pkgMainClass = conf.get(pkgMainClass);
+			}
+		} catch (Exception e) {
+			System.out.println("==convertPkgMainClassMapping ERROR==");
+			e.printStackTrace();
 		}
 		return pkgMainClass;
 	}
