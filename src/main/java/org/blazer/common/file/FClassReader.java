@@ -34,10 +34,7 @@ public class FClassReader {
 		return c;
 	}
 
-	public void each(FHandler handler) throws IOException {
-		while (hasNext()) {
-			handler.handle(next());
-		}
+	public void close() {
 		try {
 			this.br.close();
 		} catch (Exception e) {
@@ -50,6 +47,14 @@ public class FClassReader {
 			this.is.close();
 		} catch (Exception e) {
 		}
+	}
+
+	public void each(FHandler handler) throws IOException {
+		while (hasNext()) {
+			handler.handle(next());
+			handler.add();
+		}
+		close();
 	}
 
 }
