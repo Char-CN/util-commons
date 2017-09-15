@@ -17,6 +17,12 @@ public abstract class FHandler {
 		return objs[index];
 	}
 
+	/**
+	 * 重写该方法如果需要使用外部变量，需要定义成final或者new的时候传递参数
+	 * 
+	 * @param row
+	 * @throws IOException
+	 */
 	public abstract void handle(String row) throws IOException;
 
 	private int count = 0;

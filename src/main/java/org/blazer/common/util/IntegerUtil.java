@@ -2,26 +2,37 @@ package org.blazer.common.util;
 
 public class IntegerUtil {
 
-	public static Integer parseInt0(Object obj) {
-		if (obj == null) {
+	public static Integer getInt(Object o) {
+		if (o == null) {
+			return null;
+		}
+		try {
+			return Integer.parseInt(o.toString());
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	public static Integer getInt0(Object o) {
+		if (o == null) {
 			return 0;
 		}
 		try {
-			return Integer.parseInt(obj.toString());
+			return Integer.parseInt(o.toString());
 		} catch (Exception e) {
 		}
 		return 0;
 	}
 
-	public static Integer parseInt(Object obj) {
-		if (obj == null) {
-			return null;
+	public static Integer getInt1(Object o) {
+		if (o == null) {
+			return 1;
 		}
 		try {
-			return Integer.parseInt(obj.toString());
+			return Integer.parseInt(o.toString());
 		} catch (Exception e) {
 		}
-		return null;
+		return 1;
 	}
 
 }

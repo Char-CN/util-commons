@@ -1,6 +1,6 @@
 package org.blazer.common.conf;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +52,30 @@ public class Conf {
 		return this;
 	}
 
+	/**
+	 * @return HashMap<String, String>
+	 */
+	public HashMap<String, String> cloneContentMap() {
+		HashMap<String, String> newHashMap = new HashMap<String, String>();
+		for (String key : contentMap.keySet()) {
+			newHashMap.put(key, contentMap.get(key));
+		}
+		return newHashMap;
+	}
+
+	public boolean isEmpty() {
+		return contentMap == null || contentMap.isEmpty();
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (String key : keyList) {
+			sb.append(key).append("=").append(contentMap.get(key)).append("\n");
+		}
+		return sb.toString();
+	}
+
 	private void load(String filePath, final String... args) {
 		if (contentMap == null) {
 			contentMap = new HashMap<String, String>();
@@ -63,7 +87,7 @@ public class Conf {
 			invalidList = new ArrayList<String>();
 		}
 		try {
-			FHandler fHandler = new FHandler() {
+			FHandler handler = new FHandler() {
 				@Override
 				public void handle(String row) throws IOException {
 					// 过滤空行
@@ -98,40 +122,14 @@ public class Conf {
 					contentMap.put(key, value);
 				}
 			};
-			try {
-				FClassReader fcr = new FClassReader(filePath);
-				fcr.each(fHandler);
-			} catch (Exception e) {
-				if (e instanceof FileNotFoundException) {
-					FReader fr = new FReader(filePath);
-					fr.each(fHandler);
-				} else {
-					e.printStackTrace();
-				}
+			if (new File(filePath).isFile()) {
+				FReader.create(filePath, handler);
+			} else if (Conf.class.getResourceAsStream(filePath) != null) {
+				FClassReader.create(filePath, handler);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * @return HashMap<String, String>
-	 */
-	public HashMap<String, String> cloneContentMap() {
-		HashMap<String, String> newHashMap = new HashMap<String, String>();
-		for (String key : contentMap.keySet()) {
-			newHashMap.put(key, contentMap.get(key));
-		}
-		return newHashMap;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for (String key : keyList) {
-			sb.append(key).append("=").append(contentMap.get(key)).append("\n");
-		}
-		return sb.toString();
 	}
 
 }

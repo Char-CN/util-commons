@@ -1,4 +1,4 @@
-package org.blazer.common.main;
+package org.blazer.common.run;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -14,6 +14,16 @@ import org.blazer.common.util.PathUtil;
 /**
  * 执行入口
  * 
+ * 定义：
+ * 
+ * 如果jar文件下有目录resource/sys-pkg-register.properties
+ * 
+ * 则会读取该配置文件，获取 映射名称<<==>>classPath 的关系，执行该Class
+ * 
+ * 如果jar文件下有目录extlib/*.jar
+ * 
+ * 则会将该jar文件引入当前环境
+ * 
  * @author heyunyang
  * 
  */
@@ -25,10 +35,6 @@ public class RunManager {
 	public static void main(String[] args) {
 		if (args.length < 1) {
 			System.out.println("==RunManager== " + "Usage: java -jar pkg.mainclass [parameters...]");
-			System.exit(-1);
-		}
-		if (RunManager.class.getName().equals(args[0])) {
-			System.out.println("==RunManager== " + "Usage: pkg.mainclass can not be " + RunManager.class.getName());
 			System.exit(-1);
 		}
 		String pkgMainClass = convertPkgMainClassMapping(args[0]);

@@ -13,17 +13,28 @@ public class FClassReader {
 
 	String c = null;
 
-	public FClassReader(String path) {
+	private FClassReader() {
+	}
+
+	private FClassReader(String path) {
 		this.is = FClassReader.class.getResourceAsStream(path);
 		this.isr = new InputStreamReader(this.is);
 		this.br = new BufferedReader(isr);
 	}
 
-	public FClassReader(String path, FHandler handler) throws IOException {
+	private FClassReader(String path, FHandler handler) throws IOException {
 		this.is = FClassReader.class.getResourceAsStream(path);
 		this.isr = new InputStreamReader(this.is);
 		this.br = new BufferedReader(isr);
 		each(handler);
+	}
+
+	public static FClassReader create(String path) throws IOException {
+		return new FClassReader(path);
+	}
+
+	public static FClassReader create(String path, FHandler handler) throws IOException {
+		return new FClassReader(path, handler);
 	}
 
 	public boolean hasNext() throws IOException {

@@ -10,21 +10,33 @@ import java.io.UnsupportedEncodingException;
 public class FReader {
 
 	BufferedReader br = null;
-	String c = null;
 	FileInputStream fis = null;
 	InputStreamReader isr = null;
 
-	public FReader(String path) throws FileNotFoundException, UnsupportedEncodingException {
+	String c = null;
+
+	private FReader() {
+	}
+
+	private FReader(String path) throws FileNotFoundException, UnsupportedEncodingException {
 		this.fis = new FileInputStream(path);
 		this.isr = new InputStreamReader(this.fis, "UTF-8");
 		this.br = new BufferedReader(this.isr);
 	}
 
-	public FReader(String path, FHandler handler) throws IOException {
+	private FReader(String path, FHandler handler) throws IOException {
 		this.fis = new FileInputStream(path);
 		this.isr = new InputStreamReader(this.fis, "UTF-8");
 		this.br = new BufferedReader(this.isr);
 		each(handler);
+	}
+
+	public static FReader create(String path) throws IOException {
+		return new FReader(path);
+	}
+
+	public static FReader create(String path, FHandler handler) throws IOException {
+		return new FReader(path, handler);
 	}
 
 	public boolean hasNext() throws IOException {
