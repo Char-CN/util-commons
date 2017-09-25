@@ -82,4 +82,8 @@ public class StringUtil {
 		return str == null || str.trim().isEmpty();
 	}
 
+	public static boolean isNotBlank(String str) {
+		return !(str == null || str.trim().isEmpty());
+	}
+
 }
